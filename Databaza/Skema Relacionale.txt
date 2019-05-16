@@ -1,0 +1,6 @@
+Roles(id, role_name)
+Users(id,firstname,surname,username,password,role_id)
+Companies(id,name,no_buses,manager_id)
+Timetable(id,start_time)
+Cities(id,name)
+Routes(id,price,company_id,start_city_id,end_city_id,schedule_id)
