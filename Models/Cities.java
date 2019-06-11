@@ -58,7 +58,7 @@ public class Cities {
 	 public static List<Cities> getCities(){
 	        List<Cities> citiesList=new ArrayList<>();
 
-	        String query="SELECT id,name FROM cities";
+	        String query="SELECT * FROM cities";
 
 	        try {
 	            PreparedStatement preparedStatement=DBConnection.getConnection().prepareStatement(query);
