@@ -1,4 +1,4 @@
-package per_projekt;
+
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -15,7 +15,7 @@ import javafx.scene.text.Text;
 public class Register extends Pane{
 				
 		VBox vbox = new VBox();
-		Register(){
+		public Register(){
 		Text txt = new Text("Insert your information!");
 		txt.setFont(Font.font("Verdana", FontPosture.ITALIC, 20));
 		txt.setFill(Color.DARKBLUE);
