@@ -1,7 +1,9 @@
 package Models;
 
 import Helpers.DBConnection;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -141,5 +143,17 @@ public class Route {
         }
 
         return routeList;
+    }
+
+    public static void showRoutes(TableView tv) {
+        List<Route> books = Route.getRoutes();
+
+        ObservableList<Route> routesList = FXCollections.observableArrayList();
+
+        for(int i = 0; i < books.size(); i++) {
+            routesList.add(books.get(i));
+        }
+
+        tv.setItems(routesList);
     }
 }

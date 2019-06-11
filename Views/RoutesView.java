@@ -1,14 +1,10 @@
 package Views;
 
 import Models.Route;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-
-import java.util.List;
 
 public class RoutesView extends HBox{
 
@@ -89,20 +85,9 @@ public class RoutesView extends HBox{
         getChildren().addAll(leftPane,routesTable);
         setPadding(new Insets(15));
 
-        showRoutes();
+        Route.showRoutes(routesTable);
     }
 
-    public void showRoutes() {
-        List<Route> books = Route.getRoutes();
-
-        ObservableList<Route> routesList = FXCollections.observableArrayList();
-
-        for(int i = 0; i < books.size(); i++) {
-            routesList.add(books.get(i));
-        }
-
-        routesTable.setItems(routesList);
-    }
 
     public ComboBox<String> getCboStartCity() {
         return cboStartCity;
