@@ -1,5 +1,7 @@
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -11,16 +13,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
-
+import Models.Cities;
+import Models.Route;
 public class CityView extends Application
 {
    
   public void start(Stage stage)
     {
 	 
-        List<String> cities= new ArrayList<>();
-        	
-        cities.add("Prishtina");      
+        
 
         ComboBox<String> cboCity = new ComboBox<String>();
         cboCity.setMaxWidth(Double.MAX_VALUE);
@@ -42,18 +43,28 @@ public class CityView extends Application
         
         //mock table kur krijohet lidhet me databaze krijohet e verteta 
         TableView table = new TableView();
-        table.setEditable(true);
         
-        TableColumn firstNameCol = new TableColumn("CityID");
-        TableColumn lastNameCol = new TableColumn("City Name");
+        List<Cities> cities= Cities.getCities();
+    	
+        ObservableList<Cities> citylist = FXCollections.observableArrayList();
         
-        table.getColumns().addAll(firstNameCol, lastNameCol);
+        for(int i = 0; i < cities.size(); i++) {
+        	citylist.add(cities.get(i));
+        }
         
-        table.setEditable(true);
-        firstNameCol.setMinWidth(265);
-        lastNameCol.setMinWidth(265);
-        
-        
+        table.setItems(citylist);
+//        table.setEditable(true);
+//        
+//        TableColumn firstNameCol = new TableColumn("CityID");
+//        TableColumn lastNameCol = new TableColumn("City Name");
+//        
+//        table.getColumns().addAll(firstNameCol, lastNameCol);
+//        
+//        table.setEditable(true);
+//        firstNameCol.setMinWidth(265);
+//        lastNameCol.setMinWidth(265);
+//        
+//        
         
         hBoxRemoveCity.getChildren().addAll(cboCity,btnRemoveCity);
         

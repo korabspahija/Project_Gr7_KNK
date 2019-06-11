@@ -1,10 +1,10 @@
 package Models;
 
-import Helpers.DBConnection;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import Helpers.DBConnection;
 public class Cities {
 	
 	
