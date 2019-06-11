@@ -30,10 +30,10 @@ public class TimetableView extends Pane{
 	// Gridi
 	GridPane grid = new GridPane();
 		
-	grid.add(new Label("Departure Time"), 0 ,0);
+	grid.add(new Label("Departuasdre Time: "), 0 ,0);
 	
 	TextField txtDepTime = new TextField();
-	grid.add(txtDepTime, 0, 1);
+	grid.add(txtDepTime, 1, 1);
 	
 	Button btnChangeTime = new Button("CHANGE");
 	GridPane.setHalignment(btnChangeTime, HPos.RIGHT);
