@@ -6,7 +6,7 @@ public class DBConnection {
     private static Connection dbConnection;
 
     private final static String host="localhost";
-    private final static String dbName="knk3";
+    private final static String dbName="sistemiautobuseve";
     private final static String username="root";
     private final static String password="vitiakademik";
 

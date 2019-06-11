@@ -1,4 +1,4 @@
-package Views;
+
 
 import javafx.geometry.Insets;
 import javafx.scene.control.cell.PropertyValueFactory;
