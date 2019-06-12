@@ -1,10 +1,12 @@
+package per_projekt;
 
-
+import per_projekt.Timetable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -13,10 +15,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+
 public class TimetableView extends Pane{
 	
-	private TableView table;
-	
+	private TableView tblTimetable = new TableView();
+	TextField txtDepTime = new TextField();
+	private int id;
 	
 	public TimetableView() {
 	
@@ -32,49 +36,83 @@ public class TimetableView extends Pane{
 		
 	grid.add(new Label("Departure Time: "), 0 ,0);
 	
-	TextField txtDepTime = new TextField();
-	grid.add(txtDepTime, 1, 1);
+	
+	grid.add(txtDepTime, 1, 0);
+	
 	
 	Button btnChangeTime = new Button("CHANGE");
 	GridPane.setHalignment(btnChangeTime, HPos.RIGHT);
+	btnChangeTime.setOnAction(e->{
+		changeStartHour();
+	});
 	
 	grid.setVgap(10);
 	
-	grid.add(btnChangeTime, 0, 2);
+	grid.add(btnChangeTime, 1, 2);
 	
 	vbox.getChildren().add(grid);
 		
 		
 	// Tabela	
 	// Kompania	
-	TableColumn colCompany = new TableColumn("Company");
-	colCompany.setCellValueFactory(new PropertyValueFactory<>("company_id"));
+	TableColumn<String, Timetable> colCompany = new TableColumn<>("Company");
+	colCompany.setCellValueFactory(new PropertyValueFactory<>("id"));
 	colCompany.setPrefWidth(100);
 	// Vendi i nisjes
-	TableColumn colStartCity = new TableColumn("Departure");
-	colStartCity.setCellValueFactory(new PropertyValueFactory<>("start_city"));
+	TableColumn<String, Timetable> colStartCity = new TableColumn<>("Departure");
+	colStartCity.setCellValueFactory(new PropertyValueFactory<>("startCity"));
 	colStartCity.setPrefWidth(100);
 	// Vendi i arritjes
-	TableColumn colDestCity = new TableColumn("Destination");
-	colDestCity.setCellValueFactory(new PropertyValueFactory<>("end_city"));
+	TableColumn<String, Timetable> colDestCity = new TableColumn<>("Destination");
+	colDestCity.setCellValueFactory(new PropertyValueFactory<>("endCity"));
 	colDestCity.setPrefWidth(100);
 	// Ora e nisjes
-	TableColumn colStartHour = new TableColumn("Departure Time");
-	colStartHour.setCellValueFactory(new PropertyValueFactory<>("schedule"));
+	TableColumn<String, Timetable> colStartHour = new TableColumn<>("Departure Time");
+	colStartHour.setCellValueFactory(new PropertyValueFactory<>("startHour"));
 	colStartHour.setPrefWidth(100);
 	// Ora e arritjes se nuk ka atribut arrival time n'db (ata qe e kan bo databazen jane super bala)
 	//	TableColumn colArrivalHour = new TableColumn("Arrival Time");
 	//	colArrivalHour.setCellValueFactory(new PropertyValueFactory<>("company_id"));
 	//	colArrivalHour.setPrefWidth(100);
 	
-	table = new TableView();
 	
-	table.getColumns().addAll(colCompany, colStartCity, colDestCity, colStartHour);	
+	tblTimetable.setRowFactory(tv -> {
+        
+		TableRow<Timetable> row = new TableRow<>();
+        
+        row.setOnMouseClicked(event -> {
+        txtDepTime.setText(String.valueOf(row.getItem().getStartHour()));
+        id = row.getItem().getId();
+        System.out.println(id);
+           
+        });
+        
+        return row ;
+    });
 	
-	hbox.getChildren().addAll(vbox, table);
+	tblTimetable.getColumns().addAll(colCompany, colStartCity, colDestCity, colStartHour);	
+	
+	hbox.getChildren().addAll(vbox, tblTimetable);
 	
 	getChildren().add(hbox);
+	
+	Timetable.showRoutes(tblTimetable);
 	}
+
+	// titleTxt.getText()
+	private void changeStartHour() {
+		if (Timetable.updateRoute(txtDepTime.getText(), id)) {
+			System.out.println(txtDepTime.getText());
+			Timetable.showRoutes(tblTimetable);
+			clearForm();
+		}
+		
+	}
+	
+	private void clearForm() {
+		txtDepTime.setText("");
+	}
+	
 	
 	
 }
