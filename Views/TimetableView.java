@@ -21,9 +21,14 @@ public class TimetableView extends Pane{
 	private TableView tblTimetable = new TableView();
 	private TableView tblDepTime = new TableView();
 	TextField txtDepTime = new TextField();
+	TextField txtDepartureTime = new TextField();
+	TextField changeTo = new TextField();
+	TextField txtDelete = new TextField();
 	private int routeId;
 	private int schedId;
+	private String currTime;
 	
+	@SuppressWarnings("unchecked")
 	public TimetableView() {
 	
 	// Layout osht ni Hbox i madh qe e permban ni VBox edhe ni Tabele, VBox permban GridPane	
@@ -37,20 +42,68 @@ public class TimetableView extends Pane{
 	GridPane grid = new GridPane();
 		
 	grid.add(new Label("Departure Time: "), 0 ,0);
-	
-	
 	grid.add(txtDepTime, 1, 0);
 	
 	
 	Button btnChangeTime = new Button("CHANGE");
 	GridPane.setHalignment(btnChangeTime, HPos.RIGHT);
+	grid.add(btnChangeTime, 1, 2);
+	
 	btnChangeTime.setOnAction(e->{
 		changeStartHour();
 	});
 	
-	grid.setVgap(10);
+	Button btnChangeStartTime = new Button("CHANGE DEPARTURE TIME");
+//	GridPane.setHalignment(btnChangeTime, HPos.RIGHT);
+	grid.add(btnChangeStartTime, 0, 3);
 	
-	grid.add(btnChangeTime, 1, 2);
+	btnChangeStartTime.setOnAction(e->{
+		grid.add(new Label("Select Departure Time: "), 0 ,4);
+		grid.add(new Label("Change to: "), 0 ,5);
+		grid.add(txtDepartureTime, 1, 4);
+		
+		txtDepartureTime.setDisable(true);
+		txtDepartureTime.getText();
+		
+		grid.add(changeTo, 1, 5);
+		Button btnChange = new Button("CHANGE");
+		GridPane.setHalignment(btnChange, HPos.RIGHT);
+		grid.add(btnChange, 1, 6);
+		
+		btnChange.setOnAction(event->{
+			changeTo.getText();
+			changeDepartureHour();
+		});
+		
+	});
+	
+	Button deleteTime = new Button("DELETE FROM SCHEDULE");
+//	GridPane.setHalignment(btnChangeTime, HPos.RIGHT);
+	grid.add(deleteTime, 0, 7);
+	
+	deleteTime.setOnAction(e->{
+		grid.add(new Label("Select Departure Time: "), 0 ,8);
+		grid.add(txtDelete, 1, 8);
+		
+		txtDelete.setDisable(true);
+		txtDelete.getText();
+		
+		Button btnDelete = new Button("DELETE");
+		GridPane.setHalignment(btnDelete, HPos.RIGHT);
+		grid.add(btnDelete, 1, 9);
+		
+		btnDelete.setOnAction(event->{
+			deleteHour();
+		});
+		
+	});
+	
+	
+	
+	
+	grid.setVgap(8);
+	
+	
 	
 	vbox.getChildren().add(grid);
 		
@@ -96,8 +149,22 @@ public class TimetableView extends Pane{
 	// Tabela per ndryshim te kohes
 	
 	TableColumn<String, Timetable> colSchedule = new TableColumn<>("Deparutre Hours");
-	colSchedule.setCellValueFactory(new PropertyValueFactory<>("schid"));
+	colSchedule.setCellValueFactory(new PropertyValueFactory<>("startHour"));
 	colSchedule.setPrefWidth(250);
+	
+	tblDepTime.setRowFactory(tv -> {
+        
+		TableRow<Timetable> row = new TableRow<>();
+    
+        row.setOnMouseClicked(event -> {
+        txtDepartureTime.setText(String.valueOf(row.getItem().getStartHour()));
+        txtDelete.setText(String.valueOf(row.getItem().getStartHour()));
+        currTime = String.valueOf(row.getItem().getStartHour());           
+        });
+        
+        return row ;
+    });
+	
 	
 	
 	tblDepTime.getColumns().addAll(colSchedule);
@@ -110,8 +177,24 @@ public class TimetableView extends Pane{
 	Timetable.showRoutes(tblTimetable);
 	Timetable.showSchedule(tblDepTime);
 	}
+	
+	private void deleteHour() {
+		if(Timetable.deleteHour(txtDelete.getText())) {
+			Timetable.showSchedule(tblDepTime);
+			clearForm();
+		}
+		
+	}
 
-	// titleTxt.getText()
+	// pre m'i ndrru te tabela timetable
+	private void changeDepartureHour() {
+		if(Timetable.updateDepartureHour(txtDepartureTime.getText(), changeTo.getText())) {
+			Timetable.showSchedule(tblDepTime);
+			clearForm();
+		}
+	}
+
+	// per me ndrru te routes
 	private void changeStartHour() {
 		if (Timetable.updateRoute(txtDepTime.getText(), routeId)) {
 			System.out.println(txtDepTime.getText());
@@ -123,6 +206,9 @@ public class TimetableView extends Pane{
 	
 	private void clearForm() {
 		txtDepTime.setText("");
+		txtDepartureTime.setText("");
+		txtDelete.setText("");
+		changeTo.setText("");
 	}
 	
 	
