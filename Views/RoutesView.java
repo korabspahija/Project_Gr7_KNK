@@ -1,5 +1,6 @@
+package Views;
 
-
+import Models.Route;
 import javafx.geometry.Insets;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
@@ -52,27 +53,27 @@ public class RoutesView extends HBox{
         VBox leftPane=new VBox(10);
         leftPane.getChildren().addAll(formPane,buttonsPane);
 
-        TableColumn column1 = new TableColumn<>("ID");
+        TableColumn<String, Route> column1 = new TableColumn<>("ID");
         column1.setCellValueFactory(new PropertyValueFactory("id"));
         column1.setPrefWidth(70);
 
-        TableColumn column2 = new TableColumn<>("Company");
-        column2.setCellValueFactory(new PropertyValueFactory("company"));
+        TableColumn<String, Route>column2 = new TableColumn<>("Company");
+        column2.setCellValueFactory(new PropertyValueFactory("companyName"));
         column2.setPrefWidth(110);
 
-        TableColumn column3 = new TableColumn<>("Start City");
+        TableColumn<String, Route> column3 = new TableColumn<>("Start City");
         column3.setCellValueFactory(new PropertyValueFactory("startCity"));
         column3.setPrefWidth(120);
 
-        TableColumn column4 = new TableColumn<>("End City");
+        TableColumn<String, Route> column4 = new TableColumn<>("End City");
         column4.setCellValueFactory(new PropertyValueFactory("endCity"));
         column4.setPrefWidth(120);
 
-        TableColumn column5 = new TableColumn<>("Schedule");
+        TableColumn<String, Route> column5 = new TableColumn<>("Schedule");
         column5.setCellValueFactory(new PropertyValueFactory("schedule"));
         column5.setPrefWidth(90);
 
-        TableColumn column6=new TableColumn<>("Price");
+        TableColumn<String, Route> column6=new TableColumn<>("Price");
         column6.setCellValueFactory(new PropertyValueFactory("price"));
         column6.setPrefWidth(60);
 
@@ -83,7 +84,10 @@ public class RoutesView extends HBox{
 
         getChildren().addAll(leftPane,routesTable);
         setPadding(new Insets(15));
+
+        Route.showRoutes(routesTable);
     }
+
 
     public ComboBox<String> getCboStartCity() {
         return cboStartCity;
