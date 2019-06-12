@@ -52,7 +52,7 @@ public class Cities {
 		String query="DELETE FROM cities WHERE name=`?` ";
 		   try {
 	            PreparedStatement preparedStatement= DBConnection.getConnection().prepareStatement(query);
-//	            preparedStatement.setString(1,name);
+	            preparedStatement.setString(1,name);
 
 	            return(preparedStatement.executeUpdate()>0);
 	        }catch (SQLException ex){

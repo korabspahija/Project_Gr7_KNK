@@ -1,9 +1,9 @@
-package Views;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -11,18 +11,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import java.util.ArrayList;
 import java.util.List;
 import Models.Cities;
-import Models.Route;
-public class CityView extends Pane
+public class CityView extends Application
 {
 //
-//  public void start(Stage stage)
-    public CityView()
+  public void start(Stage stage)
+//    public CityView()
     {
 	 
         
@@ -34,19 +31,44 @@ public class CityView extends Pane
         
         HBox hBoxAddCity = new HBox();
         
-        Button btnRemoveCity = new Button("Fshij qytetin");
+        Button btnRemoveCity = new Button("Remove City");
         
         VBox MainVBox = new VBox(30);
         
         TextField tfAddCity = new TextField();
         
         
-        Button btnAddCity = new Button("Shto qytetin");
-       
+        Button btnAddCity = new Button("Add City");
         
+        TableView table = new TableView();
+        
+        btnAddCity.setOnAction(e->{
+        	if (!tfAddCity.getText().isEmpty()) {
+        	Cities.addCity(tfAddCity.getText());
+        	List<Cities> cities= Cities.getCities();
+        	
+            ObservableList<Cities> citylist = FXCollections.observableArrayList();
+            
+            for(int i = 0; i < cities.size(); i++) {
+            	citylist.add(cities.get(i));
+            }
+            
+            table.setItems(citylist);}
+
+          else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("");
+                alert.setHeaderText(null);
+                alert.setContentText("Plase fill this field");
+                alert.showAndWait();}
+        	
+        });
         
         //mock table kur krijohet lidhet me databaze krijohet e verteta 
-        TableView table = new TableView();
+        btnRemoveCity.setOnAction(e->{
+        	String output = cboCity.getSelectionModel().getSelectedItem().toString();
+        	Cities.removeCity(output);
+        });
         
         List<Cities> cities= Cities.getCities();
     	
@@ -73,7 +95,7 @@ public class CityView extends Pane
         table.setEditable(true);
 
 
-//        
+        
         
         hBoxRemoveCity.getChildren().addAll(cboCity,btnRemoveCity);
         
@@ -82,21 +104,21 @@ public class CityView extends Pane
         
         MainVBox.getChildren().addAll(hBoxAddCity,hBoxRemoveCity,table);
         
-//
-//        Scene scene = new Scene(MainVBox,530,500);
-//        stage.setScene(scene);
-//        stage.show();
+
+        Scene scene = new Scene(MainVBox,530,500);
+        stage.setScene(scene);
+        stage.show();
 
         cboCity.setMinWidth(200);
         cboCity.setPrefWidth(cboCity.getWidth());
 
         Cities.showCiticesOnComboBox(cboCity);
-        getChildren().add(MainVBox);
+//        getChildren().add(MainVBox);
 
     }
 
-//    public static void main(String[] args)
-//    {
-//        launch();
-//    }
+    public static void main(String[] args)
+    {
+        launch();
+    }
 }
