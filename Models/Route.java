@@ -1,6 +1,6 @@
 package Models;
 
-import Log In.DBConnection;
+import Helpers.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
@@ -92,7 +92,7 @@ public class Route {
     }
 
     public static boolean updateRoute(int id,double price,int companyId,int startCityId,int endCityId,int scheduleId){
-        String query="UPDATE routes SET price=?,companyId=?,startCityId=?,endCityId=?,scheduleId=? WHERE id=?";
+        String query="UPDATE routes SET price=?,company_id=?,start_city=?,end_city=?,schedule_id=? WHERE id=?";
 
         try {
             PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement(query);
@@ -127,8 +127,8 @@ public class Route {
     public static List<Route> getRoutes(){
         List<Route> routeList=new ArrayList<>();
 
-        String query="SELECT routes.id,price,companies.name,city1.name,city2.name,time\n" +
-                "FROM routes NATURAL JOIN companies NATURAL JOIN timetable ,cities as city1,cities as city2 WHERE start_city=city1.id and end_city=city2.id";
+        String query="SELECT routes.id,price,companies.name,city1.name,city2.name,time \n" +
+                "FROM routes , companies,timetable ,cities as city1,cities as city2 WHERE start_city=city1.id and end_city=city2.id and routes.company_id=companies.id and timetable.id=routes.schedule_id";
 
         try {
             PreparedStatement preparedStatement=DBConnection.getConnection().prepareStatement(query);

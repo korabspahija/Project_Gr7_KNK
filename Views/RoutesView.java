@@ -1,10 +1,15 @@
 package Views;
 
+import Models.Cities;
 import Models.Route;
+import Models.Timetable;
 import javafx.geometry.Insets;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
+
+import java.sql.Time;
+
 
 public class RoutesView extends HBox{
 
@@ -29,14 +34,16 @@ public class RoutesView extends HBox{
         formPane.setHgap(10);
         formPane.setVgap(10);
 
-        cboStartCity.getItems().addAll("Item 1", "Item 2","Item 3", "Item 4");
-        cboStartCity.setValue("Item 1");
+        Cities.showCiticesOnComboBox(cboStartCity);
+        cboStartCity.setValue("Startin Point");
 
-        cboEndCity.getItems().addAll("Item 1", "Item 2","Item 3", "Item 4");
-        cboEndCity.setValue("Item 1");
+        Cities.showCiticesOnComboBox(cboEndCity);
+        cboEndCity.setValue("End Point");
 
-        cboSchedule.getItems().addAll("Item 1", "Item 2","Item 3", "Item 4");
+        Timetable.showSchedulesOnComboBox(cboSchedule);
         cboSchedule.setValue("Item 1");
+
+
 
         formPane.addRow(0,new Label("ID"),tfId);
         formPane.addRow(1,new Label("Company"),tfCompany);
@@ -81,12 +88,42 @@ public class RoutesView extends HBox{
         routesTable.setPrefHeight(200);
         routesTable.setPrefWidth(650);
 
-
         getChildren().addAll(leftPane,routesTable);
         setPadding(new Insets(15));
 
         Route.showRoutes(routesTable);
+
+        routesTable.setRowFactory(tv->{
+            TableRow<Route> row=new TableRow<>();
+
+            row.setOnMouseClicked(event -> {
+                tfId.setText(String.valueOf(row.getItem().getId()));
+                tfCompany.setText(String.valueOf(row.getItem().getCompanyName()));
+                tfPrice.setText(String.valueOf(row.getItem().getPrice()));
+                cboStartCity.setValue(String.valueOf(row.getItem().getStartCity()));
+                cboEndCity.setValue(String.valueOf(row.getItem().getEndCity()));
+                cboSchedule.setValue(String.valueOf(row.getItem().getSchedule()));
+            });
+            return row;
+        });
+
+        btnInsert.setOnAction(e->{
+            Route.addRoute(Double.parseDouble(tfPrice.getText()),Timetable.getIdByName(tfCompany.getText()),Cities.getIdByName(cboStartCity.getValue()),Cities.getIdByName(cboEndCity.getValue()),Timetable.getIdByName(cboSchedule.getValue()));
+            Route.showRoutes(routesTable);
+        });
+
+        btnDelete.setOnAction(e->{
+            Route.deleteRoute(Integer.parseInt(tfId.getText()));
+            Route.showRoutes(routesTable);
+        });
+
+        btnUpdate.setOnAction(e->{
+            Route.updateRoute(Integer.parseInt(tfId.getText()),Double.parseDouble(tfPrice.getText()), Timetable.getIdByName(tfCompany.getText()),Cities.getIdByName(cboStartCity.getValue()),Cities.getIdByName(cboEndCity.getValue()),Timetable.getIdByName(cboSchedule.getValue()));
+            Route.showRoutes(routesTable);
+        });
+
     }
+
 
 
     public ComboBox<String> getCboStartCity() {

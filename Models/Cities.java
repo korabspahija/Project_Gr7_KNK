@@ -47,6 +47,7 @@ public class Cities {
 	            return false;
 	        }
 	}
+
 	public static boolean removeCity(String name) {
 		
 		String query="DELETE FROM cities WHERE name=? ";
@@ -61,49 +62,64 @@ public class Cities {
 	        }
 	}
 	
-	 public static List<Cities> getCities(){
-	        List<Cities> citiesList=new ArrayList<>();
+	 public static List<Cities> getCities() {
+		 List<Cities> citiesList = new ArrayList<>();
 
-	        String query="SELECT * FROM cities";
+		 String query = "SELECT * FROM cities";
 
-	        try {
-	            PreparedStatement preparedStatement=DBConnection.getConnection().prepareStatement(query);
-	            ResultSet resultSet=preparedStatement.executeQuery();
+		 try {
+			 PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement(query);
+			 ResultSet resultSet = preparedStatement.executeQuery();
 
-	            while (resultSet.next()){
-	                Cities cities=new Cities(resultSet.getInt(1),resultSet.getString(2));
-	                citiesList.add(cities);
-	            }
-	        }catch (SQLException ex){
-	            ex.printStackTrace();
-	        }
+			 while (resultSet.next()) {
+				 Cities cities = new Cities(resultSet.getInt(1), resultSet.getString(2));
+				 citiesList.add(cities);
+			 }
+		 } catch (SQLException ex) {
+			 ex.printStackTrace();
+		 }
 
-	        return citiesList;
-	    }
-	    public static void showCities(TableView tableView){
-			List<Cities> cities = new ArrayList<>();
-			ObservableList<Cities>citiesList = FXCollections.observableArrayList();
+		 return citiesList;
+	 }
 
-			for (int i = 0; i< cities.size(); i++){
-				citiesList.add(cities.get(i));
-			}
-			tableView.setItems(citiesList);
+	public static void showCities(TableView tableView){
+		List<Cities> cities = new ArrayList<>();
+		ObservableList<Cities>citiesList = FXCollections.observableArrayList();
+
+		for (int i = 0; i< cities.size(); i++){
+			citiesList.add(cities.get(i));
 		}
+		tableView.setItems(citiesList);
+	}
 
-	   public static void showCiticesOnComboBox(ComboBox<String> cbo){
-			String query = "SELECT name FROM cities";
- 			try {
- 				PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement(query);
- 				ResultSet resultSet = preparedStatement.executeQuery();
- 				while (resultSet.next()){
-					cbo.getItems().add(resultSet.getString(1));
-				}
+	public static void showCiticesOnComboBox(ComboBox<String> cbo) {
+	   String query = "SELECT name FROM cities";
+	   try {
+		   PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement(query);
+		   ResultSet resultSet = preparedStatement.executeQuery();
+		   while (resultSet.next()) {
+			   cbo.getItems().add(resultSet.getString(1));
+		   }
 
 
-			}catch (SQLException ex){
-				System.out.println("ooof... " + ex);
-			}
+	   } catch (SQLException ex) {
+		   System.out.println("ooof... " + ex);
+	   }
+	}
 
+	public static int getIdByName(String name){
+		String query="SELECT id FROM cities WHERE name=?";
+		try{
+			PreparedStatement preparedStatement=DBConnection.getConnection().prepareStatement(query);
+			preparedStatement.setString(1,name);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			resultSet.beforeFirst();
+			resultSet.next();
+			return resultSet.getInt(1);
+		}catch (SQLException ex){
+			ex.printStackTrace();
+			return 1;
+		}
 	}
 
 }
