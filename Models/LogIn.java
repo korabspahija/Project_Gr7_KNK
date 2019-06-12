@@ -1,5 +1,8 @@
+package Models;
+
 import javafx.scene.control.Alert;
 
+import Helpers.DBConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -52,5 +55,21 @@ public class LogIn {
             System.exit(0);        }
     }
 
+    public static int getRoleid(String username) {
+    	
+    	String query = "Select role_id from users where username=?";
+    	 try {
+             PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement(query);
+             preparedStatement.setString(1, username);
+             ResultSet result = preparedStatement.executeQuery();
+             String str = result.getString("role_id");
+             int quan = Integer.parseInt(str);
+             return quan;
+             }catch(SQLException ex){
+                 ex.printStackTrace();
+                 return 0;}    	
+    }
+    
+    
 }
 
