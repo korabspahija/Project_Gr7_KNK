@@ -202,6 +202,21 @@ public class Timetable {
     }
     
     
+    // Funksioni i Visit
+    public static int getIdByName(String name){
+        String query="SELECT id FROM timetable WHERE time=?";
+        try {
+            PreparedStatement preparedStatement=DBConnection.getConnection().prepareStatement(query);
+            preparedStatement.setString(1,name);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            resultSet.beforeFirst();
+            resultSet.next();
+            return resultSet.getInt(1);
+        }catch (SQLException ex){
+            ex.printStackTrace();
+            return 2;
+        }
+    }
     
     
 
