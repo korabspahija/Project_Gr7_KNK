@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Helpers.DBConnection;
+import javafx.scene.control.ComboBox;
 public class Cities {
 	
 	
@@ -74,13 +75,12 @@ public class Cities {
 
 	        return citiesList;
 	    }
-<<<<<<< HEAD
+	
 	 public static void main(String[] args) {
 		 
 		 System.out.println(getCities());
 	 }
-=======
-
+	
 	public static void showCiticesOnComboBox(ComboBox<String> cbo){
 		String query = "SELECT name FROM cities";
 		try {
@@ -96,7 +96,4 @@ public class Cities {
 		}
 
 	}
-
-	
->>>>>>> 9fe1dd7fec66863fe7ce09bc3ef1203b04d24410
 }
