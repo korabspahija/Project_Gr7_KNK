@@ -11,8 +11,8 @@ import javafx.scene.layout.VBox;
 
 public class CompaniesUI  extends HBox{
 
-    private TextField txtID = new TextField();
-    private TextField txtPrice = new TextField();
+    private TextField tfID = new TextField();
+    private TextField tfPrice = new TextField();
     private ComboBox<String> cboTime = new ComboBox<>();
     private ComboBox<String> cboStart = new ComboBox<>();
     private ComboBox<String> cboEnd = new ComboBox<>();
@@ -31,14 +31,15 @@ public class CompaniesUI  extends HBox{
     public CompaniesUI(int userId){
 
 
-        txtID.setDisable(true);
+        tfID.setDisable(true);
+
         cboStart.setValue("Starting point");
         cboEnd.setValue("Ending point");
         cboTime.setValue("Schedule");
 
         // caktimi i width
-        txtID.setMaxWidth(150);
-        txtPrice.setMaxWidth(150);
+        tfID.setMaxWidth(150);
+        tfPrice.setMaxWidth(150);
         cboTime.setMaxWidth(150);
         cboStart.setMaxWidth(150);
         cboEnd.setMaxWidth(150);
@@ -48,11 +49,11 @@ public class CompaniesUI  extends HBox{
         CompanyRoutes.showSchedule(cboTime);
 
         // krijimi i formes ??
-        formPane.addRow(0,new Label("ID :"), txtID);
+        formPane.addRow(0,new Label("ID :"), tfID);
         formPane.addRow(1,new Label("Start :"), cboStart);
         formPane.addRow(2,new Label("End :"), cboEnd);
         formPane.addRow(3,new Label("Time :"), cboTime);
-        formPane.addRow(4,new Label("Price :"), txtPrice);
+        formPane.addRow(4,new Label("Price :"), tfPrice);
         formPane.setPadding(new Insets(0,0,0,10));
         formPane.setVgap(10);
         formPane.setHgap(10);
@@ -99,7 +100,7 @@ public class CompaniesUI  extends HBox{
         });
         btnAdd.setOnAction(event ->
         {
-            CompanyRoutes.insertRoute(Double.parseDouble(txtPrice.getText()), cboStart.getValue(), cboEnd.getValue(), cboTime.getValue());
+            CompanyRoutes.insertRoute(Double.parseDouble(tfPrice.getText()), cboStart.getValue(), cboEnd.getValue(), cboTime.getValue());
             CompanyRoutes.showRoutes(tabela,cboStart.getValue(),cboEnd.getValue(), userId);
 
         });
@@ -107,13 +108,13 @@ public class CompaniesUI  extends HBox{
 
         btnDelete.setOnAction(event ->{
 
-            CompanyRoutes.deleteRoute(Integer.parseInt(txtID.getText()));
+            CompanyRoutes.deleteRoute(Integer.parseInt(tfID.getText()));
             CompanyRoutes.showRoutes(tabela,cboStart.getValue(),cboEnd.getValue(), userId);
 
         });
 
         btnUpdate.setOnAction(event -> {
-            CompanyRoutes.updateRoute(Double.parseDouble(txtPrice.getText()),cboStart.getValue(),cboEnd.getValue(),cboTime.getValue(),Integer.parseInt(txtID.getText()));
+            CompanyRoutes.updateRoute(Double.parseDouble(tfPrice.getText()),cboStart.getValue(),cboEnd.getValue(),cboTime.getValue(),Integer.parseInt(tfID.getText()));
             CompanyRoutes.showRoutes(tabela,cboStart.getValue(),cboEnd.getValue(),userId);
 
         });
@@ -124,8 +125,8 @@ public class CompaniesUI  extends HBox{
             TableRow<CompanyRoutes> row = new TableRow<>();
 
             row.setOnMouseClicked(event -> {
-                txtID.setText(String.valueOf(row.getItem().getId()));
-                txtPrice.setText(String.valueOf( row.getItem().getPrice()));
+                tfID.setText(String.valueOf(row.getItem().getId()));
+                tfPrice.setText(String.valueOf( row.getItem().getPrice()));
                 cboTime.setValue(String.valueOf(row.getItem().getSchedule()));
                 cboEnd.setValue(String.valueOf(row.getItem().getEndCity()));
                 cboStart.setValue(String.valueOf(row.getItem().getStartCity()));

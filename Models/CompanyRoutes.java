@@ -20,7 +20,8 @@ public class CompanyRoutes {
     private String endCity;
     private String schedule;
 
-    public CompanyRoutes(double price,String companyName,String startCity,String endCity,String schedule){
+    public CompanyRoutes(int id, double price,String companyName,String startCity,String endCity,String schedule){
+        this.id = id;
         this.price=price;
         this.companyName=companyName;
         this.startCity=startCity;
@@ -82,7 +83,7 @@ public class CompanyRoutes {
     public static List<CompanyRoutes> getRoutes(String startCity, String endCity,int userId){
         List<CompanyRoutes> routeLists=new ArrayList<>();
 
-        String query = " SELECT  r.price, c.name, t.time  FROM timetable t  JOIN  routes r  JOIN companies c JOIN users u" +
+        String query = " SELECT  r.price, c.name, t.time, r.id  FROM timetable t  JOIN  routes r  JOIN companies c JOIN users u" +
         " WHERE r.company_id = c.id AND t.id = r.schedule_id AND c.manager_id = u.id AND" +
                 " r.start_city = (select c1.id from cities c1 where c1.name = ?) AND r.end_city= (select c2.id from cities c2 where c2.name = ?) and u.id = ?";
 
@@ -98,7 +99,7 @@ public class CompanyRoutes {
 
             while (resultSet.next()){
 
-                CompanyRoutes routes = new CompanyRoutes(resultSet.getDouble(1),resultSet.getString(2),startCity,endCity, resultSet.getString(3));
+                CompanyRoutes routes = new CompanyRoutes(resultSet.getInt(4),resultSet.getDouble(1),resultSet.getString(2),startCity,endCity, resultSet.getString(3));
 
                 routeLists.add(routes);
             }
@@ -232,9 +233,9 @@ public class CompanyRoutes {
     public static List<CompanyRoutes> getRoutes(String startCity, String endCity){
         List<CompanyRoutes> routeLists=new ArrayList<>();
 
-        String query = " SELECT  r.price, c.name, t.time,  FROM timetable t  JOIN  routes r  JOIN companies c JOIN users u" +
-                "WHERE r.company_id = c.id AND t.id = r.schedule_id AND c.manager_id = u.id AND" +
-                "r.start_city = (select c1.id from cities c1 where c1.name = ?) AND r.end_city= (select c2.id from cities c2 where c2.name = ?)";
+        String query = " SELECT  r.price, c.name, t.time, r.id  FROM timetable t  JOIN  routes r  JOIN companies c JOIN users u" +
+                " WHERE r.company_id = c.id AND t.id = r.schedule_id AND c.manager_id = u.id AND" +
+                " r.start_city = (select c1.id from cities c1 where c1.name = ?) AND r.end_city= (select c2.id from cities c2 where c2.name = ?)";
 
 
 
@@ -247,7 +248,7 @@ public class CompanyRoutes {
 
             while (resultSet.next()){
 
-                CompanyRoutes routes = new CompanyRoutes(resultSet.getDouble(1),resultSet.getString(2),startCity,endCity, resultSet.getString(3));
+                CompanyRoutes routes = new CompanyRoutes(resultSet.getInt(4),resultSet.getDouble(1),resultSet.getString(2),startCity,endCity, resultSet.getString(3));
 
                 routeLists.add(routes);
             }
