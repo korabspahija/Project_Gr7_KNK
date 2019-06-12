@@ -19,8 +19,10 @@ import javafx.scene.layout.VBox;
 public class TimetableView extends Pane{
 	
 	private TableView tblTimetable = new TableView();
+	private TableView tblDepTime = new TableView();
 	TextField txtDepTime = new TextField();
-	private int id;
+	private int routeId;
+	private int schedId;
 	
 	public TimetableView() {
 	
@@ -67,7 +69,7 @@ public class TimetableView extends Pane{
 	colDestCity.setCellValueFactory(new PropertyValueFactory<>("endCity"));
 	colDestCity.setPrefWidth(100);
 	// Ora e nisjes
-	TableColumn<String, Timetable> colStartHour = new TableColumn<>("Departure Time");
+	TableColumn<String, Timetable> colStartHour = new TableColumn<>("Departure Hours");
 	colStartHour.setCellValueFactory(new PropertyValueFactory<>("startHour"));
 	colStartHour.setPrefWidth(100);
 	// Ora e arritjes se nuk ka atribut arrival time n'db (ata qe e kan bo databazen jane super bala)
@@ -82,9 +84,8 @@ public class TimetableView extends Pane{
         
         row.setOnMouseClicked(event -> {
         txtDepTime.setText(String.valueOf(row.getItem().getStartHour()));
-        id = row.getItem().getId();
-        System.out.println(id);
-           
+        routeId = row.getItem().getId();
+                   
         });
         
         return row ;
@@ -92,16 +93,27 @@ public class TimetableView extends Pane{
 	
 	tblTimetable.getColumns().addAll(colCompany, colStartCity, colDestCity, colStartHour);	
 	
-	hbox.getChildren().addAll(vbox, tblTimetable);
+	// Tabela per ndryshim te kohes
+	
+	TableColumn<String, Timetable> colSchedule = new TableColumn<>("Deparutre Hours");
+	colSchedule.setCellValueFactory(new PropertyValueFactory<>("schid"));
+	colSchedule.setPrefWidth(250);
+	
+	
+	tblDepTime.getColumns().addAll(colSchedule);
+	
+	hbox.setSpacing(17);
+	hbox.getChildren().addAll(vbox, tblTimetable, tblDepTime);
 	
 	getChildren().add(hbox);
 	
 	Timetable.showRoutes(tblTimetable);
+	Timetable.showSchedule(tblDepTime);
 	}
 
 	// titleTxt.getText()
 	private void changeStartHour() {
-		if (Timetable.updateRoute(txtDepTime.getText(), id)) {
+		if (Timetable.updateRoute(txtDepTime.getText(), routeId)) {
 			System.out.println(txtDepTime.getText());
 			Timetable.showRoutes(tblTimetable);
 			clearForm();
