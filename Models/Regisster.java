@@ -1,18 +1,8 @@
-package per_projekt;
+package Models;
 
-import per_projekt.DBConnection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
+import Helpers.DBConnection;
+import java.sql.*;
 import java.lang.String;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
-
 
 public class Regisster {
     

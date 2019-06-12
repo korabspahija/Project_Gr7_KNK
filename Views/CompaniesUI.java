@@ -10,6 +10,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.sql.Time;
+
 public class CompaniesUI  extends HBox{
 
     private TextField tfID = new TextField();
@@ -47,7 +49,7 @@ public class CompaniesUI  extends HBox{
 
         Cities.showCiticesOnComboBox(cboStart);
         Cities.showCiticesOnComboBox(cboEnd);
-        CompanyRoutes.showSchedule(cboTime);
+        Timetable.showSchedulesOnComboBox(cboTime);
 
         // krijimi i formes ??
         formPane.addRow(0,new Label("ID :"), tfID);

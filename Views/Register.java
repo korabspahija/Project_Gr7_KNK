@@ -1,7 +1,7 @@
-package per_projekt;
+package Views;
 
 
-import per_projekt.Regisster;
+import Models.Regisster;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -27,7 +27,7 @@ public class Register extends Pane{
 		private TextField txtEmail= new TextField();
 		private TextField txtPassword= new TextField();
 		
-		Register(){
+		public Register(){
 		Text txt = new Text("Insert your information!");
 		txt.setFont(Font.font("Verdana", FontPosture.ITALIC, 20));
 		txt.setFill(Color.DARKBLUE);
@@ -48,7 +48,7 @@ public class Register extends Pane{
 		grid.add(txtLastName, 1, 1);
 		//Row3
 		grid.add(new Label("Usermame: "), 0, 2);
-		
+
 		grid.add(txtUsername, 1, 2);
 		//Row4
 		grid.add(new Label("Email: "), 0, 3);
@@ -59,7 +59,8 @@ public class Register extends Pane{
 		
 		txtPassword.setPromptText("Enter your pass");
 		grid.add(txtPassword, 1, 4);
-		
+
+		setPadding(new Insets(20));
 		
 		// Buttoni Register
 		Button btnRegister = new Button("Register");

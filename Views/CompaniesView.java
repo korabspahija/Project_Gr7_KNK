@@ -1,3 +1,6 @@
+package Views;
+
+import Models.*;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -39,7 +42,7 @@ public class CompaniesView extends VBox {
 
 
         Companies.showRoutes(userTbl);
-
+        setPadding(new Insets(20));
 
 ////////////////////////Pjesa e editueshme nga admini//////////////////////////////////////////
 

@@ -1,10 +1,10 @@
-import javafx.scene.control.Alert;
+package Models;
 
+import Helpers.DBConnection;
+import javafx.scene.control.Alert;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import Helpers.DBConnection;
 
 public class LogIn {
 
@@ -20,8 +20,8 @@ public class LogIn {
         this.role_id = role_id;
     }
 
-    public static void loggingIn(String username, String password){
-        String query = "Select * from users where username = ? and password = ?";
+    public static boolean loggingIn(String username, String password){
+        String query = "Select role_id from users where username = ? and password = ?";
         try {
             PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement(query);
             preparedStatement.setString(1, username);
@@ -35,13 +35,14 @@ public class LogIn {
                 alert.setHeaderText(null);
                 alert.setContentText("You have logged in!");
                 alert.showAndWait();
-
+                return true;
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Login result");
                 alert.setHeaderText(null);
                 alert.setContentText("Email or password is wrong!");
                 alert.showAndWait();
+                return false;
 
             }
         }catch(SQLException ex){
@@ -51,21 +52,9 @@ public class LogIn {
             alert.setHeaderText(null);
             alert.setContentText(ex.getMessage());
             alert.showAndWait();
-            System.exit(0);        }
-    }
-   public static int getRoleid(String username) {
-    	
-    	String query = "Select role_id from users where username=?";
-    	 try {
-             PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement(query);
-             preparedStatement.setString(1, username);
-             ResultSet result = preparedStatement.executeQuery();
-             String str = result.getString("role_id");
-             int quan = Integer.parseInt(str);
-             return quan;
-             }catch(SQLException ex){
-                 ex.printStackTrace();
-                 return 0;}    	
+            System.exit(0);
+            return false;
+        }
     }
 
 }

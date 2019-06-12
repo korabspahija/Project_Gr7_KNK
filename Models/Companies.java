@@ -1,3 +1,6 @@
+package Models;
+
+import Helpers.DBConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -151,6 +154,22 @@ public class Companies {
             return false;
         }
     }
+
+    public static int getIdByName(String name){
+        String query="SELECT id FROM companies WHERE name=?";
+        try {
+            PreparedStatement preparedStatement=DBConnection.getConnection().prepareStatement(query);
+            preparedStatement.setString(1,name);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            resultSet.beforeFirst();
+            resultSet.next();
+            return resultSet.getInt(1);
+        }catch (SQLException ex){
+            ex.printStackTrace();
+            return 3;
+        }
+    }
+
 }
 
 

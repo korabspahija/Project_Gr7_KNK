@@ -1,6 +1,6 @@
-package per_projekt;
+package Models;
 
-import per_projekt.DBConnection;
+import Helpers.DBConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +11,7 @@ import java.lang.String;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 
 
@@ -217,7 +218,21 @@ public class Timetable {
             return 2;
         }
     }
-    
+
+    public static void showSchedulesOnComboBox(ComboBox<String> cbo) {
+        String query = "SELECT time FROM timetable";
+        try {
+            PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                cbo.getItems().add(resultSet.getString(1));
+            }
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
     
 
 	

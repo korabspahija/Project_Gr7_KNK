@@ -1,5 +1,8 @@
+package Views;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -117,6 +120,7 @@ public class CityView extends VBox{
         cboCity.setMinWidth(200);
         cboCity.setPrefWidth(cboCity.getWidth());
 
+        setPadding(new Insets(20));
         Cities.showCiticesOnComboBox(cboCity);
         getChildren().add(MainVBox);
 

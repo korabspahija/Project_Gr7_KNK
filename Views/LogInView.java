@@ -1,5 +1,10 @@
+package Views;
+
+import Models.LogIn;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -9,10 +14,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
-
+import javafx.stage.Stage;
 
 public class LogInView extends StackPane {
     private TextField tfUsername = new TextField();
@@ -63,11 +66,13 @@ public class LogInView extends StackPane {
         gridPane.addRow(4, hBox1);
 
 
-        btnLogin.setOnAction(event -> LogIn.loggingIn(tfUsername.getText(), pfPassword.getText() ));
+
+
         getChildren().addAll(gridPane);
 
         gridPane.setAlignment(Pos.CENTER);
     }
+
 
     public TextField getTfUsername() {
         return tfUsername;
@@ -91,5 +96,13 @@ public class LogInView extends StackPane {
 
     public void setBtnLogin(Button btnLogin) {
         this.btnLogin = btnLogin;
+    }
+
+    public Label getLblGuest() {
+        return lblGuest;
+    }
+
+    public Label getLblSignup() {
+        return lblSignup;
     }
 }

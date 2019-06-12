@@ -1,6 +1,6 @@
-package per_projekt;
+package Views;
 
-import per_projekt.Timetable;
+import Models.Timetable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -56,7 +56,9 @@ public class TimetableView extends Pane{
 	Button btnChangeStartTime = new Button("CHANGE DEPARTURE TIME");
 //	GridPane.setHalignment(btnChangeTime, HPos.RIGHT);
 	grid.add(btnChangeStartTime, 0, 3);
-	
+
+	setPadding(new Insets(20));
+
 	btnChangeStartTime.setOnAction(e->{
 		grid.add(new Label("Select Departure Time: "), 0 ,4);
 		grid.add(new Label("Change to: "), 0 ,5);

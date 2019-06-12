@@ -1,3 +1,5 @@
+package Views;
+
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
@@ -87,9 +89,22 @@ public class AdminView extends BorderPane {
 	    });
 	    
 	    
-	    btnCities.setOnAction(e->{
-	    setRight(new CityView());});
-	   
+	    btnCities.setOnAction(e-> {
+            setRight(new CityView());
+        });
+
+
+	    btnLines.setOnAction(e->{
+	        setRight(new RoutesView());
+        });
+
+	    btnUsers.setOnAction(event -> {
+	        setRight(new CompaniesView());
+        });
+
+	    btnSchedule.setOnAction(event -> {
+	        setRight(new TimetableView());
+        });
 	}
   
 }

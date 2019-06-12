@@ -1,15 +1,10 @@
 package Views;
 
-import Models.Cities;
-import Models.Route;
-import Models.Timetable;
+import Models.*;
 import javafx.geometry.Insets;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-
-import java.sql.Time;
-
 
 public class RoutesView extends HBox{
 
@@ -108,7 +103,7 @@ public class RoutesView extends HBox{
         });
 
         btnInsert.setOnAction(e->{
-            Route.addRoute(Double.parseDouble(tfPrice.getText()),Timetable.getIdByName(tfCompany.getText()),Cities.getIdByName(cboStartCity.getValue()),Cities.getIdByName(cboEndCity.getValue()),Timetable.getIdByName(cboSchedule.getValue()));
+            Route.addRoute(Double.parseDouble(tfPrice.getText()),Companies.getIdByName(tfCompany.getText()),Cities.getIdByName(cboStartCity.getValue()),Cities.getIdByName(cboEndCity.getValue()),Timetable.getIdByName(cboSchedule.getValue()));
             Route.showRoutes(routesTable);
         });
 
@@ -118,10 +113,10 @@ public class RoutesView extends HBox{
         });
 
         btnUpdate.setOnAction(e->{
-            Route.updateRoute(Integer.parseInt(tfId.getText()),Double.parseDouble(tfPrice.getText()), Timetable.getIdByName(tfCompany.getText()),Cities.getIdByName(cboStartCity.getValue()),Cities.getIdByName(cboEndCity.getValue()),Timetable.getIdByName(cboSchedule.getValue()));
+            Route.updateRoute(Integer.parseInt(tfId.getText()),Double.parseDouble(tfPrice.getText()), Companies.getIdByName(tfCompany.getText()),Cities.getIdByName(cboStartCity.getValue()),Cities.getIdByName(cboEndCity.getValue()),Timetable.getIdByName(cboSchedule.getValue()));
             Route.showRoutes(routesTable);
         });
-
+        setPadding(new Insets(20));
     }
 
 
