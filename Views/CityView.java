@@ -1,3 +1,4 @@
+package Views;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -8,17 +9,20 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 import Models.Cities;
 import Models.Route;
-public class CityView extends Application
+public class CityView extends Pane
 {
-   
-  public void start(Stage stage)
+//
+//  public void start(Stage stage)
+    public CityView()
     {
 	 
         
@@ -53,17 +57,22 @@ public class CityView extends Application
         }
         
         table.setItems(citylist);
-//        table.setEditable(true);
-//        
-//        TableColumn firstNameCol = new TableColumn("CityID");
-//        TableColumn lastNameCol = new TableColumn("City Name");
-//        
-//        table.getColumns().addAll(firstNameCol, lastNameCol);
-//        
-//        table.setEditable(true);
-//        firstNameCol.setMinWidth(265);
-//        lastNameCol.setMinWidth(265);
-//        
+        table.setEditable(true);
+
+
+        TableColumn<String, Cities> col1 = new TableColumn<>("City ID");
+        col1.setCellValueFactory(new PropertyValueFactory<>("id"));
+        col1.setPrefWidth(265);
+
+        TableColumn<String, Cities> col2 = new TableColumn<>("City Name");
+        col2.setCellValueFactory(new PropertyValueFactory<>("name"));
+        col2.setPrefWidth(265);
+
+        table.getColumns().addAll(col1, col2);
+//
+        table.setEditable(true);
+
+
 //        
         
         hBoxRemoveCity.getChildren().addAll(cboCity,btnRemoveCity);
@@ -73,18 +82,21 @@ public class CityView extends Application
         
         MainVBox.getChildren().addAll(hBoxAddCity,hBoxRemoveCity,table);
         
-        
-        Scene scene = new Scene(MainVBox,530,500);
-        stage.setScene(scene);
-        stage.show();
+//
+//        Scene scene = new Scene(MainVBox,530,500);
+//        stage.setScene(scene);
+//        stage.show();
 
         cboCity.setMinWidth(200);
         cboCity.setPrefWidth(cboCity.getWidth());
-        
+
+        Cities.showCiticesOnComboBox(cboCity);
+        getChildren().add(MainVBox);
+
     }
 
-    public static void main(String[] args)
-    {
-        launch();
-    }
+//    public static void main(String[] args)
+//    {
+//        launch();
+//    }
 }
