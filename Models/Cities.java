@@ -74,5 +74,8 @@ public class Cities {
 
 	        return citiesList;
 	    }
-	
+	 public static void main(String[] args) {
+		 
+		 System.out.println(getCities());
+	 }
 }
