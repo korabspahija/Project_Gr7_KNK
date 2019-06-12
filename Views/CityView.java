@@ -67,7 +67,15 @@ public class CityView extends Application
         //mock table kur krijohet lidhet me databaze krijohet e verteta 
         btnRemoveCity.setOnAction(e->{
         	String output = cboCity.getSelectionModel().getSelectedItem().toString();
-        	Cities.removeCity(output);
+        	Cities.removeCity(output); 
+        List<Cities> cities= Cities.getCities();
+    	
+        ObservableList<Cities> citylist = FXCollections.observableArrayList();
+        
+        for(int i = 0; i < cities.size(); i++) {
+        	citylist.add(cities.get(i));
+        	}
+            table.setItems(citylist);
         });
         
         List<Cities> cities= Cities.getCities();
@@ -80,7 +88,7 @@ public class CityView extends Application
         
         table.setItems(citylist);
         table.setEditable(true);
-
+      
 
         TableColumn<String, Cities> col1 = new TableColumn<>("City ID");
         col1.setCellValueFactory(new PropertyValueFactory<>("id"));

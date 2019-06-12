@@ -33,7 +33,7 @@ public class Cities {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
+	}				
 
 	public static boolean addCity(String name) {
 		String query="INSERT INTO `sistemiautobuseve`.`cities` (`name`) VALUES (?);";
@@ -49,7 +49,7 @@ public class Cities {
 	}
 	public static boolean removeCity(String name) {
 		
-		String query="DELETE FROM cities WHERE name=`?` ";
+		String query="DELETE FROM cities WHERE name=? ";
 		   try {
 	            PreparedStatement preparedStatement= DBConnection.getConnection().prepareStatement(query);
 	            preparedStatement.setString(1,name);
@@ -60,6 +60,7 @@ public class Cities {
 	            return false;
 	        }
 	}
+	
 	 public static List<Cities> getCities(){
 	        List<Cities> citiesList=new ArrayList<>();
 
