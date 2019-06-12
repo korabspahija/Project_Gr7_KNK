@@ -1,6 +1,6 @@
 package Models;
 
-import Helpers.DBConnection;
+import Log In.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;

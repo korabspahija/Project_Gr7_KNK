@@ -1,5 +1,6 @@
 INSERT INTO `sistemiautobuseve`.`roles` (`role_name`) VALUES ('Admin');
 INSERT INTO `sistemiautobuseve`.`roles` (`role_name`) VALUES ('Company');
+INSERT INTO `sistemiautobuseve`.`roles` (`role_name`) VALUES ('Guest');
 
 INSERT INTO `sistemiautobuseve`.`cities` (`name`) VALUES ('Prishtina');
 INSERT INTO `sistemiautobuseve`.`cities` (`name`) VALUES ('Peja');
