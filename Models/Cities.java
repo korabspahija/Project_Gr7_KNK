@@ -74,8 +74,29 @@ public class Cities {
 
 	        return citiesList;
 	    }
+<<<<<<< HEAD
 	 public static void main(String[] args) {
 		 
 		 System.out.println(getCities());
 	 }
+=======
+
+	public static void showCiticesOnComboBox(ComboBox<String> cbo){
+		String query = "SELECT name FROM cities";
+		try {
+			PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement(query);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()){
+				cbo.getItems().add(resultSet.getString(1));
+			}
+
+
+		}catch (SQLException ex){
+			System.out.println("ooof... " + ex);
+		}
+
+	}
+
+	
+>>>>>>> 9fe1dd7fec66863fe7ce09bc3ef1203b04d24410
 }

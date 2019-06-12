@@ -1,17 +1,18 @@
+package Views;
 
+import Models.Cities;
+import Models.CompanyRoutes;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 import java.awt.print.Book;
 
-class RegularUI extends Pane {
+public class RegularUI extends Pane {
     private ComboBox<String> cboStartCity = new ComboBox<>();
     private ComboBox<String> cboEndCity = new ComboBox<>();
 
@@ -26,11 +27,10 @@ class RegularUI extends Pane {
 
     public RegularUI(){
 
-        cboStartCity.getItems().addAll("Prishtine","Peje", "Prizren");
+        Cities.showCiticesOnComboBox(cboStartCity);
         cboStartCity.setValue("Select starting point");
 
-
-        cboEndCity.getItems().addAll("Prishtine","Peje", "Prizren");
+        Cities.showCiticesOnComboBox(cboEndCity);
         cboEndCity.setValue("Select ending point");
 
         HBox hBox = new HBox(10);
@@ -39,23 +39,23 @@ class RegularUI extends Pane {
         hBox.getChildren().addAll(cboStartCity, cboEndCity, btnSearch);
         hBox.setPadding(new Insets(0,10,10,40));
 
-        TableColumn<String, Book> col1 = new TableColumn<>("Vendi i Nisjes");
-        col1.setCellValueFactory(new PropertyValueFactory<>("start"));
+        TableColumn<String, CompanyRoutes> col1 = new TableColumn<>("Vendi i Nisjes");
+        col1.setCellValueFactory(new PropertyValueFactory<>("startCity"));
         col1.setPrefWidth(100);
 
-        TableColumn<String, Book> col2 = new TableColumn<>("Vendi i Arritjes");
-        col2.setCellValueFactory(new PropertyValueFactory<>("end"));
+        TableColumn<String,  CompanyRoutes> col2 = new TableColumn<>("Vendi i Arritjes");
+        col2.setCellValueFactory(new PropertyValueFactory<>("endCity"));
         col2.setPrefWidth(100);
 
-        TableColumn<String, Book> col3 = new TableColumn<>("Ora e Nisjes");
-        col3.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        TableColumn<String,  CompanyRoutes> col3 = new TableColumn<>("Ora e Nisjes");
+        col3.setCellValueFactory(new PropertyValueFactory<>("schedule"));
         col3.setPrefWidth(100);
 
-        TableColumn<String, Book> col4 = new TableColumn<>("Kompania");
-        col4.setCellValueFactory(new PropertyValueFactory<>("company_id"));
+        TableColumn<String,  CompanyRoutes> col4 = new TableColumn<>("Kompania");
+        col4.setCellValueFactory(new PropertyValueFactory<>("companyName"));
         col4.setPrefWidth(100);
 
-        TableColumn<String, Book> col5 = new TableColumn<>("Cmimi");
+        TableColumn<String,  CompanyRoutes> col5 = new TableColumn<>("Cmimi");
         col5.setCellValueFactory(new PropertyValueFactory<>("price"));
         col5.setPrefWidth(50);
 
@@ -70,9 +70,8 @@ class RegularUI extends Pane {
         getChildren().add(borderPane);
 
 
-        cboEndCity.setOnAction(event -> System.out.println("City Seleced"+ cboEndCity.getValue()));
+        btnSearch.setOnAction(e -> CompanyRoutes.showRoutes(tabela,cboStartCity.getValue(),cboEndCity.getValue()));
     }
-
 }
 
 
