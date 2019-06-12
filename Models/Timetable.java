@@ -93,6 +93,40 @@ public class Timetable {
         }
     }
     
+    public static boolean updateDepartureHour(String currHour, String depHour) {
+    	String query = "UPDATE timetable SET time = ?  WHERE time = ?";
+    	
+    	 try {
+             PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement(query);
+             
+             preparedStatement.setString(1, depHour);
+             preparedStatement.setString(2, currHour);
+                         
+             return (preparedStatement.executeUpdate()>0);
+         }catch (SQLException ex){
+             ex.printStackTrace();
+             return false;
+         }
+    	
+   }
+    
+    
+    public static boolean deleteHour(String currHour) {
+    	String query = "DELETE FROM timetable WHERE time = ?";
+    	
+    	 try {
+             PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement(query);
+             
+             preparedStatement.setString(1, currHour);
+                         
+             return (preparedStatement.executeUpdate()>0);
+         }catch (SQLException ex){
+             ex.printStackTrace();
+             return false;
+         }
+    	
+   }
+    
     
     
     
@@ -168,6 +202,21 @@ public class Timetable {
     }
     
     
+    // Funksioni i Visit
+    public static int getIdByName(String name){
+        String query="SELECT id FROM timetable WHERE time=?";
+        try {
+            PreparedStatement preparedStatement=DBConnection.getConnection().prepareStatement(query);
+            preparedStatement.setString(1,name);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            resultSet.beforeFirst();
+            resultSet.next();
+            return resultSet.getInt(1);
+        }catch (SQLException ex){
+            ex.printStackTrace();
+            return 2;
+        }
+    }
     
     
 
