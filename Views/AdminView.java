@@ -1,19 +1,21 @@
-
-
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 public class AdminView extends BorderPane {
 	
-	private Button btnUsers = new Button("Modifikim i user-eve");
-    private Button btnCities = new Button ("Modifikimi i qyteteve");
-    private Button btnLines = new Button("Modifikim i linjave");
-    private Button btnSchedule= new Button("Modifikim i orarit");
+	private Button btnUsers = new Button("Modify Users");
+    private Button btnCities = new Button ("Modify Cities");
+    private Button btnLines = new Button("Modify Routes");
+    private Button btnSchedule= new Button("Modify Schedule");
 	
 	public AdminView() {
 		VBox vBox = new VBox(15);
+		
 	    vBox.setPadding(new Insets(15, 15, 15, 15));
 	    
 	    btnUsers.setPrefHeight(140);
@@ -36,7 +38,16 @@ public class AdminView extends BorderPane {
 	     
 	    vBox.getChildren().addAll(btnUsers,btnCities,btnLines,btnSchedule);
 	    setLeft(vBox);
-	    setTop(hbox);	    
+	    setTop(hbox);	
+	    
+	    btnBack.setOnAction(e->{
+	    	setRight(new HBox());
+	    });
+	    
+	    
+	    btnCities.setOnAction(e->{
+	    setRight(new CityView());});
+	   
 	}
-
+  
 }

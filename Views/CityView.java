@@ -1,25 +1,22 @@
-
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import java.util.List;
 import Models.Cities;
-public class CityView extends Application
-{
+
+public class CityView extends VBox{
 //
-  public void start(Stage stage)
-//    public CityView()
+  // public void start(Stage stage)
+   public CityView()
     {
 	 
         
@@ -33,7 +30,7 @@ public class CityView extends Application
         
         Button btnRemoveCity = new Button("Remove City");
         
-        VBox MainVBox = new VBox(30);
+        VBox MainVBox = new VBox(45);
         
         TextField tfAddCity = new TextField();
         
@@ -110,23 +107,23 @@ public class CityView extends Application
         hBoxAddCity.getChildren().addAll(tfAddCity,btnAddCity);
         
         
-        MainVBox.getChildren().addAll(hBoxAddCity,hBoxRemoveCity,table);
+        MainVBox.getChildren().addAll(new Label("City management"),hBoxAddCity,hBoxRemoveCity,table);
         
 
-        Scene scene = new Scene(MainVBox,530,500);
-        stage.setScene(scene);
-        stage.show();
+        //Scene scene = new Scene(MainVBox,530,500);
+//        stage.setScene(scene);
+//        stage.show();
 
         cboCity.setMinWidth(200);
         cboCity.setPrefWidth(cboCity.getWidth());
 
         Cities.showCiticesOnComboBox(cboCity);
-//        getChildren().add(MainVBox);
+        getChildren().add(MainVBox);
 
     }
 
-    public static void main(String[] args)
-    {
-        launch();
-    }
+//    public static void main(String[] args)
+//    {
+//        launch();
+//    }
 }
