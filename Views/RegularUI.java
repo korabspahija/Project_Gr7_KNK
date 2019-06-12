@@ -10,6 +10,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
+import java.awt.print.Book;
+
 public class RegularUI extends Pane {
     private ComboBox<String> cboStartCity = new ComboBox<>();
     private ComboBox<String> cboEndCity = new ComboBox<>();
@@ -37,23 +39,23 @@ public class RegularUI extends Pane {
         hBox.getChildren().addAll(cboStartCity, cboEndCity, btnSearch);
         hBox.setPadding(new Insets(0,10,10,40));
 
-        TableColumn<String, CompanyRoutes> col1 = new TableColumn<>("Departure City");
+        TableColumn<String, CompanyRoutes> col1 = new TableColumn<>("Vendi i Nisjes");
         col1.setCellValueFactory(new PropertyValueFactory<>("startCity"));
         col1.setPrefWidth(100);
 
-        TableColumn<String,  CompanyRoutes> col2 = new TableColumn<>("Arrival City");
+        TableColumn<String,  CompanyRoutes> col2 = new TableColumn<>("Vendi i Arritjes");
         col2.setCellValueFactory(new PropertyValueFactory<>("endCity"));
         col2.setPrefWidth(100);
 
-        TableColumn<String,  CompanyRoutes> col3 = new TableColumn<>("Starting Time");
+        TableColumn<String,  CompanyRoutes> col3 = new TableColumn<>("Ora e Nisjes");
         col3.setCellValueFactory(new PropertyValueFactory<>("schedule"));
         col3.setPrefWidth(100);
 
-        TableColumn<String,  CompanyRoutes> col4 = new TableColumn<>("Company Name");
+        TableColumn<String,  CompanyRoutes> col4 = new TableColumn<>("Kompania");
         col4.setCellValueFactory(new PropertyValueFactory<>("companyName"));
         col4.setPrefWidth(100);
 
-        TableColumn<String,  CompanyRoutes> col5 = new TableColumn<>("Price");
+        TableColumn<String,  CompanyRoutes> col5 = new TableColumn<>("Cmimi");
         col5.setCellValueFactory(new PropertyValueFactory<>("price"));
         col5.setPrefWidth(50);
 
