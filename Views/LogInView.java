@@ -1,7 +1,5 @@
-import Models.LogIn;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -11,8 +9,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
+import javafx.scene.text.TextAlignment;
 
 
 public class LogInView extends StackPane {
@@ -22,7 +21,7 @@ public class LogInView extends StackPane {
     private Label lblSignup = new Label("Signup");
     private Label lblGuest = new Label("Continue As Guest");
     private Label lblLOGIN = new Label("LOGIN");
-    int  number=0;
+
 
 
 
@@ -62,17 +61,9 @@ public class LogInView extends StackPane {
         gridPane.add(hBox2, 1, 3);
         gridPane.addRow(4,hBox);
         gridPane.addRow(4, hBox1);
-        
-        
-         
-        btnLogin.setOnAction(event ->{ 
-        	
-        	LogIn.loggingIn(tfUsername.getText(), pfPassword.getText());
-        	
-        	number = LogIn.getRoleid(tfUsername.getText());
-        
-        
-        });
+
+
+        btnLogin.setOnAction(event -> LogIn.loggingIn(tfUsername.getText(), pfPassword.getText() ));
         getChildren().addAll(gridPane);
 
         gridPane.setAlignment(Pos.CENTER);
@@ -101,14 +92,4 @@ public class LogInView extends StackPane {
     public void setBtnLogin(Button btnLogin) {
         this.btnLogin = btnLogin;
     }
- 
-    public void start(Stage primaryStage) {
-    	
-    	if (number==1) {
-		AdminView view=new AdminView();
-		Scene scene=new Scene(view,900,650);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-		}
-	}
 }
