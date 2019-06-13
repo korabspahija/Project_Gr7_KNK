@@ -3,6 +3,7 @@ package Views;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -17,13 +18,11 @@ import java.util.List;
 import Models.Cities;
 
 public class CityView extends VBox{
-//
-  // public void start(Stage stage)
+
+
    public CityView()
     {
 	 
-        
-
         ComboBox<String> cboCity = new ComboBox<String>();
         cboCity.setMaxWidth(Double.MAX_VALUE);
        
@@ -99,35 +98,24 @@ public class CityView extends VBox{
         col2.setPrefWidth(265);
 
         table.getColumns().addAll(col1, col2);
-//
         table.setEditable(true);
 
-
-        
-        
         hBoxRemoveCity.getChildren().addAll(cboCity,btnRemoveCity);
         
         hBoxAddCity.getChildren().addAll(tfAddCity,btnAddCity);
         
         
-        MainVBox.getChildren().addAll(new Label("City management"),hBoxAddCity,hBoxRemoveCity,table);
-        
-
-        //Scene scene = new Scene(MainVBox,530,500);
-//        stage.setScene(scene);
-//        stage.show();
+        getChildren().addAll(new Label("City management"),hBoxAddCity,hBoxRemoveCity,table);
+        setSpacing(10);
+        setAlignment(Pos.CENTER);
 
         cboCity.setMinWidth(200);
         cboCity.setPrefWidth(cboCity.getWidth());
 
-        setPadding(new Insets(20));
+        setPadding(new Insets(0,300,0,0));
         Cities.showCiticesOnComboBox(cboCity);
-        getChildren().add(MainVBox);
+
 
     }
 
-//    public static void main(String[] args)
-//    {
-//        launch();
-//    }
 }

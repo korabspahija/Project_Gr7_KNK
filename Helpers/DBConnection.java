@@ -14,7 +14,7 @@ public class DBConnection {
         if(dbConnection==null){
             try{
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                dbConnection=DriverManager.getConnection("jdbc:mysql://"+host+"/"+dbName+"?useSSL=false",username,password);
+                dbConnection=DriverManager.getConnection("jdbc:mysql://"+host+"/"+dbName+"?useSSL=false&allowPublicKeyRetrieval=true",username,password);
             }catch (Exception ex){
                 ex.printStackTrace();
             }

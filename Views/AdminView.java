@@ -1,11 +1,15 @@
 package Views;
 
+import Helpers.Help;
+import Main.Test;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 public class AdminView extends BorderPane {
 	
@@ -14,20 +18,29 @@ public class AdminView extends BorderPane {
     private Button btnLines = new Button("Modify Routes");
     private Button btnSchedule= new Button("Modify Schedule");
 	
-	public AdminView() {
-		
+	public AdminView(Stage curentStage) {
+
 		// General Menu
         Menu generalMenu = new Menu("File"); 
         
         MenuItem exitMenuItem = new MenuItem("Exit"); 
         
-        MenuItem backMenuItem = new MenuItem("Back"); 
+        MenuItem backMenuItem = new MenuItem("Back");
+
+        MenuItem logoutMenuItem=new MenuItem("LogOut");
         
         exitMenuItem.setOnAction(e -> {
         	Platform.exit();
         });
+
+
+        logoutMenuItem.setOnAction(e->{
+            Test test=new Test();
+            test.start(new Stage());
+            curentStage.hide();
+        });
         
-        generalMenu.getItems().addAll(backMenuItem,exitMenuItem); 
+        generalMenu.getItems().addAll(backMenuItem,exitMenuItem,logoutMenuItem);
 
         
         // HelpMenu
@@ -42,6 +55,7 @@ public class AdminView extends BorderPane {
         
         MenuItem albanian = new MenuItem("Albanian"); 
         languagesMenu.getItems().addAll(english, albanian);
+
         
         aboutHelpItem.setOnAction(e -> {
         	Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -50,7 +64,10 @@ public class AdminView extends BorderPane {
             alert.setContentText("We worked very hard and i hope u like our program");
             alert.showAndWait();
         });
-        
+
+        aboutHelpItem.setOnAction(e->{
+            Help.about();
+        });
   
         MenuBar mb = new MenuBar(); 
   

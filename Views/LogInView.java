@@ -66,11 +66,10 @@ public class LogInView extends StackPane {
         gridPane.addRow(4, hBox1);
 
 
-
-
         getChildren().addAll(gridPane);
 
         gridPane.setAlignment(Pos.CENTER);
+
     }
 
 

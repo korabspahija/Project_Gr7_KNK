@@ -170,6 +170,20 @@ public class Companies {
         }
     }
 
+    public static int getCompanyId(int userId){
+        String query= "SELECT id FROM companies WHERE manager_id=?";
+        try{
+            PreparedStatement preparedStatement=DBConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1,userId);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            resultSet.beforeFirst();
+            resultSet.next();
+            return resultSet.getInt(1);
+        }catch (SQLException ex){
+            ex.printStackTrace();
+            return 0;
+        }
+    }
 }
 
 

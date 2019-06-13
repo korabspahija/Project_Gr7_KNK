@@ -20,8 +20,8 @@ public class CompanyRoutes {
     private String endCity;
     private String schedule;
 
-    public CompanyRoutes(double price,String companyName,String startCity,String endCity,String schedule){
-//        this.id=id;
+    public CompanyRoutes(int id,double price,String companyName,String startCity,String endCity,String schedule){
+        this.id=id;
         this.price=price;
         this.companyName=companyName;
         this.startCity=startCity;
@@ -83,7 +83,7 @@ public class CompanyRoutes {
     public static List<CompanyRoutes> getRoutes(String startCity, String endCity){
         List<CompanyRoutes> routeLists=new ArrayList<>();
 
-        String query = "SELECT  r.price, c.name, t.time FROM timetable t  JOIN  routes r  JOIN companies c " +
+        String query = "SELECT  r.price, c.name, t.time r.id FROM timetable t  JOIN  routes r  JOIN companies c " +
                 "Where  r.company_id = c.id and r.schedule_id = t.id and r.start_city = (select c1.id from cities c1 where c1.name = ?) AND r.end_city = (select c2.id from cities c2 where c2.name = ?)";
 
         try {
@@ -95,7 +95,7 @@ public class CompanyRoutes {
 
             while (resultSet.next()){
 
-                CompanyRoutes routes = new CompanyRoutes(resultSet.getDouble(1),resultSet.getString(2),startCity,endCity, resultSet.getString(3));
+                CompanyRoutes routes = new CompanyRoutes(resultSet.getInt(4) ,resultSet.getDouble(1),resultSet.getString(2),startCity,endCity, resultSet.getString(3));
 
                 routeLists.add(routes);            }
         }catch (SQLException ex){
@@ -122,24 +122,20 @@ public class CompanyRoutes {
     public static List<CompanyRoutes> getRoutes(String startCity, String endCity,int userId){
         List<CompanyRoutes> routeLists=new ArrayList<>();
 
-        String query = " SELECT  r.price, c.name, t.time  FROM timetable t  JOIN  routes r  JOIN companies c JOIN users u" +
+        String query = " SELECT  r.price, c.name, t.time , r.id FROM timetable t  JOIN  routes r  JOIN companies c JOIN users u" +
                 " WHERE r.company_id = c.id AND t.id = r.schedule_id AND c.manager_id = u.id AND" +
                 " r.start_city = (select c1.id from cities c1 where c1.name = ?) AND r.end_city= (select c2.id from cities c2 where c2.name = ?) and u.id = ?";
 
-
-
         try {
             PreparedStatement preparedStatement=DBConnection.getConnection().prepareStatement(query);
+
             preparedStatement.setString(1,startCity);
             preparedStatement.setString(2, endCity);
             preparedStatement.setInt(3,userId);
             ResultSet resultSet=preparedStatement.executeQuery();
 
-
             while (resultSet.next()){
-
-                CompanyRoutes routes = new CompanyRoutes(resultSet.getDouble(1),resultSet.getString(2),startCity,endCity, resultSet.getString(3));
-
+                CompanyRoutes routes = new CompanyRoutes(resultSet.getInt(4),resultSet.getDouble(1),resultSet.getString(2),startCity,endCity, resultSet.getString(3));
                 routeLists.add(routes);
             }
         }catch (SQLException ex){
@@ -148,6 +144,7 @@ public class CompanyRoutes {
 
         return routeLists;
     }
+
 
 
     public static void showRoutesCompany(TableView tableView, String startCity, String endCity, int userId){
@@ -164,12 +161,48 @@ public class CompanyRoutes {
 
 
     }
-    public static boolean insertRoute(double price,String startCity, String endCity, String schedule){
+
+    public static List<CompanyRoutes> getRoutes(int userid){
+        List<CompanyRoutes> routeList=new ArrayList<>();
+
+        String query="SELECT routes.id,price,companies.name,city1.name,city2.name,time \n" +
+                "FROM routes , companies,timetable ,cities as city1,cities as city2,users WHERE start_city=city1.id and end_city=city2.id and " +
+                "routes.company_id=companies.id and timetable.id=routes.schedule_id and users.id = companies.manager_id AND users.id =? ";
+
+        try {
+            PreparedStatement preparedStatement=DBConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1,userid);
+            ResultSet resultSet=preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                CompanyRoutes route=new CompanyRoutes(resultSet.getInt(1),resultSet.getDouble(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getString(6));
+                routeList.add(route);
+            }
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+
+        return routeList;
+    }
+    public static void showRoutes(TableView tv, int userId) {
+        List<CompanyRoutes> books = CompanyRoutes.getRoutes(userId);
+
+        ObservableList<CompanyRoutes> routesList = FXCollections.observableArrayList();
+
+        for(int i = 0; i < books.size(); i++) {
+            routesList.add(books.get(i));
+        }
+
+        tv.setItems(routesList);
+    }
+
+
+    public static boolean insertRoute(double price,String startCity, String endCity, String schedule,int companyId){
 
         String query = "INSERT INTO routes (company_id, price,start_city,end_city,schedule_id) VALUES(?,?,?,?,?)";
         try {
             PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement(query);
-            preparedStatement.setInt(1,1);
+            preparedStatement.setInt(1,companyId);
             preparedStatement.setDouble(2,price);
             preparedStatement.setInt(3,getIdByNameCities(startCity));
             preparedStatement.setInt(4,getIdByNameCities(endCity));
@@ -246,7 +279,7 @@ public class CompanyRoutes {
             System.out.println("ooof te getIdByTime... " + ex);
             return 0;
 
-//
+
         }
     }
 
@@ -262,11 +295,8 @@ public class CompanyRoutes {
         }catch (SQLException ex){
 
             System.out.println("ooof te show schedule ... "+ ex);
-        } }
-
-
-
-
+        }
+    }
 
 }
 

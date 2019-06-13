@@ -20,7 +20,7 @@ public class LogIn {
         this.role_id = role_id;
     }
 
-    public static boolean loggingIn(String username, String password){
+    public static int loggingIn(String username, String password){
         String query = "Select role_id from users where username = ? and password = ?";
         try {
             PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement(query);
@@ -30,20 +30,9 @@ public class LogIn {
             ResultSet result = preparedStatement.executeQuery();
 
             if(result.next()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Login result");
-                alert.setHeaderText(null);
-                alert.setContentText("You have logged in!");
-                alert.showAndWait();
-                return true;
+                return result.getInt(1);
             } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Login result");
-                alert.setHeaderText(null);
-                alert.setContentText("Email or password is wrong!");
-                alert.showAndWait();
-                return false;
-
+                return 0;
             }
         }catch(SQLException ex){
             ex.printStackTrace();
@@ -53,9 +42,25 @@ public class LogIn {
             alert.setContentText(ex.getMessage());
             alert.showAndWait();
             System.exit(0);
-            return false;
+            return 0;
         }
     }
+
+    public static int getUserIdByUsername(String username){
+        String query="SELECT id FROM users WHERE username=?";
+        try{
+            PreparedStatement preparedStatement=DBConnection.getConnection().prepareStatement(query);
+            preparedStatement.setString(1,username);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            resultSet.beforeFirst();
+            resultSet.next();
+            return resultSet.getInt(1);
+        }catch (SQLException ex){
+            ex.printStackTrace();
+            return 10;
+        }
+    }
+
 
 }
 

@@ -146,12 +146,12 @@ public class Route {
     }
 
     public static void showRoutes(TableView tv) {
-        List<Route> books = Route.getRoutes();
+        List<Route> routes = Route.getRoutes();
 
         ObservableList<Route> routesList = FXCollections.observableArrayList();
 
-        for(int i = 0; i < books.size(); i++) {
-            routesList.add(books.get(i));
+        for(int i = 0; i < routes.size(); i++) {
+            routesList.add(routes.get(i));
         }
 
         tv.setItems(routesList);

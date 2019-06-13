@@ -66,7 +66,7 @@ public class RegularUI extends Pane {
         borderPane.setPrefWidth(450);
         getChildren().add(borderPane);
 
-
+        Route.showRoutes(tabela);
         btnSearch.setOnAction(e -> CompanyRoutes.showRoutes(tabela,cboStartCity.getValue(),cboEndCity.getValue()));
     }
 }
