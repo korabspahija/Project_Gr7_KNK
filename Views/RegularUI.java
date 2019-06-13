@@ -1,15 +1,16 @@
 package Views;
 
+import Helpers.Help;
+import Main.Test;
 import Models.*;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
-public class RegularUI extends Pane {
+public class RegularUI extends VBox {
     private ComboBox<String> cboStartCity = new ComboBox<>();
     private ComboBox<String> cboEndCity = new ComboBox<>();
 
@@ -22,7 +23,7 @@ public class RegularUI extends Pane {
 
 
 
-    public RegularUI(){
+    public RegularUI(Stage curentStage){
 
         Cities.showCiticesOnComboBox(cboStartCity);
         cboStartCity.setValue("Select starting point");
@@ -64,10 +65,47 @@ public class RegularUI extends Pane {
         borderPane.setPadding(new Insets(10, 0, 10, 0));
 
         borderPane.setPrefWidth(450);
+
+
+        Menu generalMenu = new Menu("File");
+
+        MenuItem exitMenuItem = new MenuItem("Exit");
+        MenuItem backMenuItem = new MenuItem("Back");
+
+        generalMenu.getItems().addAll(backMenuItem,exitMenuItem);
+
+        Menu helpMenu = new Menu("Help") ;
+        MenuItem aboutHelpItem = new MenuItem("About");
+        helpMenu.getItems().add(aboutHelpItem);
+
+        Menu languagesMenu = new Menu("Languages");
+        MenuItem english = new MenuItem("English");
+        MenuItem albanian = new MenuItem("Albanian");
+        languagesMenu.getItems().addAll(english, albanian);
+
+        MenuBar mb = new MenuBar();
+        mb.getMenus().addAll(generalMenu, helpMenu,languagesMenu);
+
+        aboutHelpItem.setOnAction(event -> {
+            Help.about();
+        });
+
+        backMenuItem.setOnAction(event -> {
+            Test test=new Test();
+            test.start(new Stage());
+            curentStage.hide();
+        });
+
+        exitMenuItem.setOnAction(event -> Platform.exit());
+
+        getChildren().add(mb);
         getChildren().add(borderPane);
 
+
         Route.showRoutes(tabela);
-        btnSearch.setOnAction(e -> CompanyRoutes.showRoutes(tabela,cboStartCity.getValue(),cboEndCity.getValue()));
+        btnSearch.setOnAction(e -> {
+            CompanyRoutes.showRoutes(tabela,String.valueOf(cboStartCity.getValue()),String.valueOf(cboEndCity.getValue()));
+        });
     }
 }
 

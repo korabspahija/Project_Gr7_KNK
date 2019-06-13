@@ -1,7 +1,7 @@
 package Views;
 
-
-import Models.Regisster;
+import Main.*;
+import Models.*;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class Register extends Pane{
 				
@@ -25,9 +26,9 @@ public class Register extends Pane{
 		private TextField txtLastName= new TextField();
 		private TextField txtUsername= new TextField();
 		private TextField txtEmail= new TextField();
-		private TextField txtPassword= new TextField();
+		private PasswordField txtPassword= new PasswordField();
 		
-		public Register(){
+		public Register(Stage curentStage){
 		Text txt = new Text("Insert your information!");
 		txt.setFont(Font.font("Verdana", FontPosture.ITALIC, 20));
 		txt.setFill(Color.DARKBLUE);
@@ -70,7 +71,9 @@ public class Register extends Pane{
 		
 		btnRegister.setOnAction(e->{
 			Insert();
-			
+			Test test=new Test();
+			test.start(new Stage());
+			curentStage.hide();
 			
 		});
 		

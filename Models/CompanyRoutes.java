@@ -83,8 +83,9 @@ public class CompanyRoutes {
     public static List<CompanyRoutes> getRoutes(String startCity, String endCity){
         List<CompanyRoutes> routeLists=new ArrayList<>();
 
-        String query = "SELECT  r.price, c.name, t.time r.id FROM timetable t  JOIN  routes r  JOIN companies c " +
-                "Where  r.company_id = c.id and r.schedule_id = t.id and r.start_city = (select c1.id from cities c1 where c1.name = ?) AND r.end_city = (select c2.id from cities c2 where c2.name = ?)";
+        String query = " SELECT  r.price, c.name, t.time , r.id FROM timetable t  JOIN  routes r  JOIN companies c JOIN users u" +
+                " WHERE r.company_id = c.id AND t.id = r.schedule_id AND c.manager_id = u.id AND" +
+                " r.start_city = (select c1.id from cities c1 where c1.name = ?) AND r.end_city= (select c2.id from cities c2 where c2.name = ?)";
 
         try {
             PreparedStatement preparedStatement=DBConnection.getConnection().prepareStatement(query);
@@ -92,12 +93,10 @@ public class CompanyRoutes {
             preparedStatement.setString(2, endCity);
             ResultSet resultSet=preparedStatement.executeQuery();
 
-
             while (resultSet.next()){
-
                 CompanyRoutes routes = new CompanyRoutes(resultSet.getInt(4) ,resultSet.getDouble(1),resultSet.getString(2),startCity,endCity, resultSet.getString(3));
-
-                routeLists.add(routes);            }
+                routeLists.add(routes);
+            }
         }catch (SQLException ex){
             ex.printStackTrace();
         }
@@ -116,7 +115,6 @@ public class CompanyRoutes {
         }
 
         tableView.setItems(routesList);
-
 
     }
     public static List<CompanyRoutes> getRoutes(String startCity, String endCity,int userId){

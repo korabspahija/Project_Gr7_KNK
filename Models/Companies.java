@@ -62,27 +62,6 @@ public class Companies {
         this.no_buses = no_buses;
     }
 
-/////////////////UPDATE/////////////////////////////
-//    public static boolean updateRoute(String scheduleId, int id){
-//        String query="UPDATE companies SET compani= (SELECT timetable.id FROM timetable WHERE time = ?) WHERE routes.id=?";
-//
-//        try {
-//            PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement(query);
-//
-//            preparedStatement.setTime(1, java.sql.Time.valueOf(scheduleId));
-//            preparedStatement.setInt(2, id);
-//
-//            System.out.println(java.sql.Time.valueOf(scheduleId));
-//
-//            return (preparedStatement.executeUpdate()>0);
-//        }catch (SQLException ex){
-////        	System.out.println("A");
-//            ex.printStackTrace();
-//            return false;
-//        }
-//    }
-
-
 
     public static List<Companies> getRoutes(){
 
@@ -118,29 +97,6 @@ public class Companies {
         tv.setItems(routesList);
     }
 
-
-    //FUNKSIONI PER UPDATE
-//    public static boolean updateTable(String companyName, int no_buses, String username) {
-//        String query = "UPDATE companies SET companies.name = ?, companies.no_buses=? WHERE companies.name="+companyName;
-//        String query1 = "UPDATE users SET users.username= ?";
-//
-//        try {
-//            PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement(query);
-//            PreparedStatement preparedStatement1 = DBConnection.getConnection().prepareStatement(query1);
-//
-//
-//            preparedStatement.setString(1, companyName);
-//            preparedStatement.setInt(2, no_buses);
-//            preparedStatement1.setString(1,  username);
-////            preparedStatement.setInt(4, pages);
-////            preparedStatement.setInt(5, id);
-//
-//            return ((preparedStatement.executeUpdate() > 0) && (preparedStatement1.executeUpdate() > 0));
-//        } catch(SQLException ex) {
-//            ex.printStackTrace();
-//            return false;
-//        }
-//    }
 
     public static boolean deleteRecord(String companyName) {
         String query = "Delete from companies where companies.name=?";

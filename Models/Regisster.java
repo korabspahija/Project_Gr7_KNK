@@ -29,24 +29,5 @@ public class Regisster {
         
     
     }
-    
-//    public static int getRoleid(String username) {
-//    	
-//    	String query = "Select role_id from users where username=?";
-//    	 try {
-//             PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement(query);
-//             preparedStatement.setString(1, username);
-//             ResultSet result = preparedStatement.executeQuery();
-//             String str = result.getString("role_id");
-//             int quan = Integer.parseInt(str);
-//             return quan;
-//             }catch(SQLException ex){
-//                 ex.printStackTrace();
-//                 return 0;}    	
-//    }
-    
- 
-    
-    
-    
+
 }

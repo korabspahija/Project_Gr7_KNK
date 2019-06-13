@@ -7,10 +7,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 
 public class CompaniesView extends VBox {
 //name of the company, email, username, number of routes
@@ -71,15 +67,8 @@ public class CompaniesView extends VBox {
             deleteVoid();
         });
 
-        //BUTONI UPDATE
-//        updateButton.setOnAction( e -> {
-//            update();
-//        });
-
-        //
         HBox hBox = new HBox(10);
         hBox.setPadding(new Insets(10, 10, 10, 10));
-//        hBox.getChildren().addAll(txtComName, tfUsername, txtNo_buses, addButton, updateButton, deleteButton);
         hBox.getChildren().addAll(txtComName, tfUsername, txtNo_buses,deleteButton);
 
 /////////////////////Perfundimi i pjeses se editueshme nga admini/////////////////////////////////////
@@ -102,42 +91,9 @@ public class CompaniesView extends VBox {
     public void deleteVoid() {
         if(Companies.deleteRecord(txtComName.getText())) {
             Companies.showRoutes(userTbl);
-//            clearForm();
         }
     }
-            //UPDATE
-//    public void update() {
-//        if (User.updateTable(txtComName.getText(), Integer.parseInt(txtNo_buses.getText()), tfUsername.getText())) {
-//            User.showRoutes(userTbl);
-//        }
-//    }
+
 }
-//    public static boolean updateRecord() {
-//        String query = "UPDATE companies SET companies.name = ? AND UPDATE users SET users.username=? AND UPDATE companies SET companies.name=?";
-//
-//        try {
-//
-//            PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement(query);
-//
-//            preparedStatement.setString(1, txtComName.getText());
-//            preparedStatement.setString(2, tfUsername.getText());
-//            preparedStatement.setString(3, txtNo_buses.getText());
-//
-//            ResultSet resultSet=preparedStatement.executeQuery();
-//
-//
-//            if(preparedStatement.executeUpdate() > 0) {
-//                resultSet.setText("Company list updated");
-//            } else {
-//                resultSet.setText("Company not found");
-//            }
-//
-//
-//        } catch(SQLException ex) {
-//            ex.printStackTrace();
-//        }
-
-
-//    }
 
 
